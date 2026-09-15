@@ -1,0 +1,31 @@
+training_mode: style_images
+
+# Stage 2: Artistic fine-tuning (Small stylized dataset)
+epochs: 15
+batch_size: 2
+lr: 5.0e-5
+output_dir: exps/train_lam/stage2_artistic
+seed: 1234
+num_workers: 4
+image_size: 256
+style_base_channels: 48
+style_latent_channels: 128
+noise_std: 0.0
+latent_blend_steps: 5
+
+# Load checkpoint from Stage 1
+model_name: ./exps/train_lam/stage1_identity/model_final.pt
+
+# Freeze config: keep encoder frozen, allow light fine-tuning of transformer/renderer
+freeze_modules: true
+freeze_config:
+  freeze_encoder: true
+  freeze_transformer: false
+  freeze_renderer: false
+
+use_param_groups: true
+lr_style_adapter: 2.0e-4
+lr_other_modules: 1.0e-5
+
+style_image_paths:
+  - ./data/artistic_styles/*.jpg

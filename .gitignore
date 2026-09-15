@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------- upstream --
+wheels
+__pycache__/
+build/
+*.so
+assets/sample_input/
+assets/sample_motion/
+configs/vhap_tracking/
+/exps/
+/pretrain_model/
+/pretrained_models/
+/model_zoo/
+/tracking_output/
+
+# ------------------------------------------- environments / vendored repos --
+/lam_env/
+*_env/
+/baselines/
+
+# ------------------------- datasets and third-party imagery (not our right --
+# to redistribute; see README for provenance and how to obtain them)
+/ffhq-dataset/
+/celeba_hq_256/
+/data/
+/figure/
+/new_input_image/
+/new-style-image/
+/original-image/
+
+# ------------------------------------------------------- experiment output --
+/tracking_output_*/
+/stylization-results/
+/jawreg_test/
+/mouthdiag/
+/symfix/
+/gsfix/
+/nostyle/
+/output/
+/my_*/
+/fig_*/
+fig_*.png
+fig.png
+grid_*.png
+jaw_sweep_preview.png
+reenactment
+/logs/
+*.log
+
+# -------------------------------------------------------- editor / caches --
+.cache/
+.gradio/
+.vscode/
+*.o
+
+# ------------------------ figures: ship the compressed PDFs, not the 25 MB --
+# vector sources (compressed/ is a subdirectory so it is unaffected)
+paper/figures/*.svg
+paper/figures/*.png
+paper/figures/fig_*.pdf
+
+# ---------------------------------------------- more run output / scratch --
+/symtest/
+/seedtest/
+/style-image/
+*.pid
+style_image*.png
+robot_demo.png
+robot_reenactment_demo.png
+reenactment_demo.png
+
+# ------------------------------------- paper source (unpublished draft) --
+paper/*.tex
+paper/*.py

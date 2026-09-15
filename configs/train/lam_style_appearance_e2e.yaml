@@ -1,0 +1,92 @@
+training_mode: style_appearance_e2e
+
+# The actual fix: end-to-end training of ModelLAM.style_adapter.appearance_mlp,
+# the module that was never touched by Stage 1/2 (TinyStyleAutoEncoder, a
+# disconnected model) or Stage 4 (which only trains geometry_mlp).
+#
+# Renders each (content, style) pair through the real frozen pretrained LAM
+# backbone (encoder/transformer/renderer stay frozen) via infer_single_view,
+# then backprops a Gatys-style content+style(+TV+AdaIN)+identity loss straight
+# into appearance_mlp.
+
+model_name: model_zoo/lam_models/releases/lam/lam-20k/step_045500/
+output_dir: exps/train_lam/style_appearance_e2e
+seed: 1234
+
+content_refs_manifest: exps/train_lam/content_refs/tracked_content_refs.json
+style_image_glob: ffhq-dataset/aahq-dataset/aligned/*.png
+
+source_image_res: 512
+bg_color: 1.0
+
+epochs: 3
+lr: 1.0e-4
+weight_decay: 0.0
+grad_accum_steps: 4
+sample_interval: 20
+num_workers: 2
+
+# Loss weights (StyleTransferLoss, reused as-is from the module already
+# defined in this file -- previously misapplied to TinyStyleAutoEncoder's own
+# reconstruction; here applied to the real rendered output).
+#
+# style_style_loss_weight was originally 5e4 (carried over from the old
+# TinyStyleAutoEncoder configs) but that drove the style term to dominate the
+# total loss and destabilized training within ~6 optimizer steps (appearance_mlp
+# pushed latent_points to extreme values, crashing the FLAME LBS transform with
+# a CUDA "unspecified launch failure"). Lowered alongside the appearance_mlp
+# tanh-bound added in modeling_lam.py (ReferenceStyleAdapter.max_appearance_scale).
+style_content_layers: [relu3_3]
+style_loss_layers: [relu1_2, relu2_2, relu3_3, relu4_3]
+style_content_loss_weight: 1.0
+style_style_loss_weight: 1.0e4
+style_pixel_loss_weight: 0.02
+style_adain_loss_weight: 1.0
+style_tv_loss_weight: 1.0e-4
+identity_loss_weight: 0.1
+
+# Style conditioning strength used during training itself (kept at 1.0 so the
+# adapter learns to use the full range; sweep style_internal_appearance_strength
+# at inference time to control the effect).
+train_style_appearance_strength: 1.0
+train_style_opacity_strength: 0.0
+
+model:
+  encoder_type: "dinov2_fusion"
+  encoder_model_name: "dinov2_vitl14_reg"
+  encoder_feat_dim: 1024
+  encoder_freeze: true
+
+  latent_query_points_type: "e2e_flame"
+  pcl_dim: 1024
+
+  transformer_type: "sd3_cond"
+  transformer_heads: 16
+  transformer_dim: 1024
+  transformer_layers: 10
+  tf_grad_ckpt: false
+  encoder_grad_ckpt: false
+
+  human_model_path: "./model_zoo/human_parametric_models"
+  flame_subdivide_num: 1
+  flame_type: "flame"
+  gs_query_dim: 1024
+  gs_use_rgb: true
+  gs_sh: 3
+  gs_mlp_network_config:
+    n_neurons: 512
+    n_hidden_layers: 2
+    activation: silu
+  gs_xyz_offset_max_step: 0.2
+  gs_clip_scaling: 0.01
+  scale_sphere: false
+
+  expr_param_dim: 10
+  shape_param_dim: 10
+
+  add_teeth: false
+  fix_opacity: false
+  fix_rotation: false
+  has_disc: false
+  teeth_bs_flag: false
+  oral_mesh_flag: false

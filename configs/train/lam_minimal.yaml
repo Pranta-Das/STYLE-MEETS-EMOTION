@@ -1,0 +1,17 @@
+training_mode: style_images
+style_image_paths:
+  - ./style_image.png
+  - ./style_image1.png
+  - ./style_image2.png
+  - ./style_image3.png
+epochs: 150
+batch_size: 2
+lr: 5.0e-4
+output_dir: exps/train_lam
+seed: 1234
+num_workers: 0
+image_size: 256
+style_base_channels: 48
+style_latent_channels: 128
+noise_std: 0.0
+latent_blend_steps: 5

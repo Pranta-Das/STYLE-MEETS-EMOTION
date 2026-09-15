@@ -1,0 +1,15 @@
+stage: track_content_refs
+
+# FLAME-track a CelebA-HQ content subset. Each tracked image gets its own
+# canonical_flame_param.npz, needed to render it through the full LAM model
+# during style-adapter training (lam_style_appearance_e2e.yaml consumes the
+# resulting tracked_content_refs.json manifest).
+
+output_dir: exps/train_lam/content_refs
+seed: 1234
+
+candidate_content_glob: celeba_hq_256/*.jpg
+max_track_images: 300
+sample_strategy: random
+tracking_output_dir: tracking_output
+skip_existing_tracking: true

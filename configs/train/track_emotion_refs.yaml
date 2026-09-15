@@ -1,0 +1,6 @@
+hf_dataset: Piro17/affectnethq
+images_per_class: 100
+local_image_dir: data/emotion_refs/images
+tracking_output_dir: tracking_output
+output_dir: exps/train_lam/emotion_refs
+skip_existing_tracking: true

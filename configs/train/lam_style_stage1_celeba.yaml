@@ -1,0 +1,40 @@
+training_mode: style_images
+
+# Stage 1: Identity / Generalization (Large natural-face dataset - CelebA-HQ)
+epochs: 5
+batch_size: 4
+lr: 1.0e-4
+output_dir: exps/train_lam/stage1_celeba
+seed: 1234
+num_workers: 4
+image_size: 256
+style_base_channels: 48
+style_latent_channels: 128
+noise_std: 0.0
+latent_blend_steps: 5
+style_content_loss_weight: 1.0
+style_style_loss_weight: 2e5
+style_pixel_loss_weight: 0.05
+style_content_layers:
+  - relu3_3
+style_loss_layers:
+  - relu1_2
+  - relu2_2
+  - relu3_3
+  - relu4_3
+
+# Freeze configuration: freeze major LAM components, train adapter + style AE
+freeze_modules: true
+freeze_config:
+  freeze_encoder: true
+  freeze_transformer: true
+  freeze_renderer: true
+
+# Optimizer param groups
+use_param_groups: true
+lr_style_adapter: 5.0e-4
+lr_other_modules: 1.0e-6
+
+# Style dataset - using CelebA-HQ 256x256 dataset
+style_image_paths:
+  - ./celeba_hq_256/*.jpg

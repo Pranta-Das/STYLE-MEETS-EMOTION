@@ -1,0 +1,62 @@
+stage: style_geometry_bank
+
+# Stage 3: Geometry reference selection/calibration for AAHQ.
+#
+# This stage does not train the tiny style autoencoder. It builds a ranked
+# bank of tracked FLAME shapes that can be used by full LAM inference with
+# style_track_geometry=true and style_geometry_strength > 0.
+
+output_dir: exps/train_lam/stage3_geometry_aahq
+seed: 1234
+
+# Track a manageable candidate subset first. Increase max_track_images after
+# checking quality/runtime on your machine.
+candidate_style_glob: ffhq-dataset/aahq-dataset/aligned/*.jpg
+max_track_images: 24
+sample_strategy: random
+tracking_output_dir: tracking_output
+skip_existing_tracking: false
+# Source identity shape to compare against. This file is produced by full LAM
+# inference/FLAME tracking for the input image.
+source_shape_path: tracking_output/export/status/canonical_flame_param.npz
+
+# Style shape files produced by FLAME tracking AAHQ style images.
+style_shape_glob: tracking_output/export/*/canonical_flame_param.npz
+
+# Original aligned AAHQ image location. The tool maps export ids back to this
+# folder when possible.
+style_image_dir: ffhq-dataset/aahq-dataset/aligned
+require_style_image_match: true
+
+# Use the same shape dimensionality as the released LAM-20K config.
+shape_dims: 10
+
+# Keep references that are different enough to affect geometry, but not so far
+# that tracking noise usually dominates.
+min_shape_l2: 0.6
+max_shape_l2: 3.0
+top_k: 32
+
+copy_selected_images: true
+clean_selected_dir: true
+
+# Recommended inference validation settings for geometry-only comparison.
+validation:
+  train_config: configs/inference/lam-20k-8gpu.yaml
+  model_name: model_zoo/lam_models/releases/lam/lam-20k/step_045500/
+  image_input: assets/sample_input/status.png
+  motion_seqs_dir: assets/sample_motion/export/Look_In_My_Eyes/
+  output_dir: exps/train_lam/stage3_geometry_aahq/validation
+  selected_style_images: exps/train_lam/stage3_geometry_aahq/selected_style_images.txt
+  top_k: 3
+  export_video: true
+  export_mesh: false
+  save_img: true
+  save_ply: false
+  render_fps: 30
+  motion_video_read_fps: 30
+  style_strength: 0.0
+  style_internal_appearance_strength: 0.0
+  style_geometry_strength: 1.0
+  style_opacity_strength: 0.0
+  style_track_geometry: true

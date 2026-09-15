@@ -1,0 +1,68 @@
+training_mode: full_lam_geometry_adapter
+
+# Geometry adapter training, v2: same recipe as the original Stage 4
+# (configs/train/lam_style_stage4_geometry_adapter_aahq.yaml), retrained on top
+# of the newly appearance-trained checkpoint instead of the raw pretrained
+# release, so appearance and geometry stylization compose correctly together.
+# Also picks up the full 32-ref geometry bank (vs. the original 24).
+
+model_name: exps/train_lam/style_appearance_e2e/model_final.pt
+output_dir: exps/train_lam/geometry_adapter_v2
+seed: 1234
+
+source_image_path: assets/sample_input/status.png
+source_shape_path: tracking_output/export/status/canonical_flame_param.npz
+selected_geometry_refs: exps/train_lam/stage3_geometry_aahq/selected_geometry_refs.json
+max_style_refs: 32
+
+epochs: 20
+lr: 3.0e-4
+weight_decay: 0.0
+shape_dims: 300
+source_image_res: 518
+style_geometry_strength: 1.0
+style_adapter_max_query_offset: 0.08
+target_geometry_blend: 1.0
+adapter_offset_reg_weight: 0.005
+smooth_l1_beta: 0.01
+
+model:
+  encoder_type: "dinov2_fusion"
+  encoder_model_name: "dinov2_vitl14_reg"
+  encoder_feat_dim: 1024
+  encoder_freeze: true
+
+  latent_query_points_type: "e2e_flame"
+  pcl_dim: 1024
+
+  transformer_type: "sd3_cond"
+  transformer_heads: 16
+  transformer_dim: 1024
+  transformer_layers: 10
+  tf_grad_ckpt: false
+  encoder_grad_ckpt: false
+
+  human_model_path: "./model_zoo/human_parametric_models"
+  flame_subdivide_num: 1
+  flame_type: "flame"
+  gs_query_dim: 1024
+  gs_use_rgb: true
+  gs_sh: 3
+  gs_mlp_network_config:
+    n_neurons: 512
+    n_hidden_layers: 2
+    activation: silu
+  gs_xyz_offset_max_step: 0.2
+  gs_clip_scaling: 0.01
+  scale_sphere: false
+
+  expr_param_dim: 10
+  shape_param_dim: 10
+  style_adapter_max_query_offset: 0.08
+
+  add_teeth: false
+  fix_opacity: false
+  fix_rotation: false
+  has_disc: false
+  teeth_bs_flag: false
+  oral_mesh_flag: false
