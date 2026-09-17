@@ -1,6 +1,6 @@
 # STYLE-MEETS-EMOTION
 
-Reference-guided stylization **and** discrete emotion control for single-image
+Reference-guided stylization and discrete emotion control for single-image
 3D Gaussian head avatars.
 
 Given one portrait, one style reference image, and one of seven emotion labels,
@@ -67,24 +67,6 @@ Emotion only, no style:
 ./run_7emotions.sh <input_image> [out_dir]
 ```
 
-## Evaluation
-
-Scoring and metric scripts used for the paper live at the repository root:
-`score_emotion_arms.py`, `score_style_4way.py`, `measure_bigrun_adoption.py`,
-`measure_bigrun_stylization_metrics.py`, among others. Results and protocol
-notes are in [EVALUATION_TABLES.md](EVALUATION_TABLES.md); implementation
-history and the reasoning behind specific design choices are in
-[STYLE_GEOMETRY_PIPELINE.md](STYLE_GEOMETRY_PIPELINE.md).
-
-Emotion accuracy is reported with **py-feat**, not with the ViT classifier that
-the refinement step optimizes against — that classifier is the optimization
-objective, so scoring with it would be circular.
-
-## Data
-
-The portrait and style images used in the paper are not redistributed here.
-They come from ArtStation renders and public photo sets; see the evaluation
-notes for provenance.
 
 ## Relationship to LAM
 
@@ -105,4 +87,4 @@ Apache License 2.0 — see [LICENSE](LICENSE).
 
 ## Citation
 
-*(TODO: add once published)*
+____
