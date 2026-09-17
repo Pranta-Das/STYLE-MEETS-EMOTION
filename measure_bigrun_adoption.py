@@ -1,18 +1,5 @@
 #!/usr/bin/env python3
-"""Stylisation adoption for the bigrun set: how much of the style image does the
-output actually take on, for COLOUR and for GEOMETRY?
 
-GEOMETRY is exact and needs no renders: FLAME identity shape is linear in betas
-(v = v_template + shapedirs @ betas), so the displacement between two tracked
-identities is shapedirs @ (b1 - b2), reported in millimetres.
-
-COLOUR is gap closure against the pipeline's OWN UNSTYLED RENDER of the same
-content and emotion -- never against the content photograph, which is a
-different kind of image (a photo, not a Gaussian reconstruction on white) and
-gives nonsense. Statistics use the pipeline's own _lab_stats(...,
-ignore_style_background=True) on the tracker's matted style crop, i.e. exactly
-what stylize_frames_with_reference aims at.
-"""
 import os, sys, glob, json, pickle, warnings, importlib.util
 warnings.filterwarnings("ignore")
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
