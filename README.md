@@ -30,13 +30,12 @@ Windows: see [scripts/install/WINDOWS_INSTALL.md](scripts/install/WINDOWS_INSTAL
 
 ## Weights
 
-Not included in this repository — the stylization checkpoint is 2.25 GB, past
-GitHub's file limit.
+we added the drive link.
 
 | file | size | where |
 |---|---|---|
-| `style_appearance_e2e_v8/model_final.pt` | 2.25 GB | *(TODO: add link)* |
-| `emotion_adapter_symmetric/emotion_adapter.pt` | 0.2 MB | *(TODO: add link)* |
+| `style_appearance_e2e_v8/model_final.pt` | 2.25 GB | *(https://drive.google.com/file/d/1RITKCi4BTDq4BDNcYbPSGgWdU_45nkZO/view?usp=sharing)* |
+| `emotion_adapter_symmetric/emotion_adapter.pt` | 0.2 MB | *(https://drive.google.com/file/d/1fM6lCL2NkUBe6-jn9YssasYLQfFpv1Y_/view?usp=sharing)* |
 
 Place them under `exps/train_lam/` matching those paths. The base LAM backbone
 and FLAME assets go in `model_zoo/`; see the upstream LAM instructions.
@@ -84,6 +83,18 @@ Files modified or added by this work include `lam/stylization/` (new),
 ## License
 
 Apache License 2.0 — see [LICENSE](LICENSE).
+
+## Result
+
+we added the drive link.
+
+| input | style image | video/image |
+|---|---|---|
+| (https://drive.google.com/file/d/1Kpnl4nVNiUGVFOTcCdxNaY2lrPpOHC4n/view?usp=sharing) | (https://drive.google.com/file/d/1Yx_K71nXY8VRF642N-8IC0bgygOc0v7T/view?usp=sharing) | *(https://drive.google.com/drive/folders/1EwnajYMEsP9XPiZwAFAsbqTD-XaSihA-?usp=sharing)* |
+| (https://drive.google.com/file/d/1Kpnl4nVNiUGVFOTcCdxNaY2lrPpOHC4n/view?usp=sharing) | (https://drive.google.com/file/d/1cRr1b0BmxauUs59D9zKdrbpKMhxuV-B2/view?usp=sharing) | *(https://drive.google.com/drive/folders/1mEN7tfkaR6JzxK7sHA8uW3NqjOTimlmc?usp=sharing)* |
+
+
+
 
 ## Citation
 
