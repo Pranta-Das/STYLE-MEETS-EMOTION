@@ -1,23 +1,3 @@
-#!/bin/bash
-# Generate all 7 emotions for one input image + one style image.
-#
-# Uses the safer emotion defaults:
-#   - symmetric emotion adapter checkpoint
-#   - no fear/component sharpening
-#   - final mouth/jaw safety clamps
-# Emotion optimization is ON by default. It was briefly turned off on the
-# theory that it satisfies the classifier by over-opening the mouth; measured
-# 2026-09-05 on 98 paired renders, turning it off costs 14.3 points of
-# emotion accuracy under an INDEPENDENT judge (py-feat, 56.1% -> 41.8%,
-# 15 lost / 1 gained, p=0.0005). The mouth artifact it can cause is handled
-# by emotion_safety below, which costs 0.0 points on that same judge.
-# To disable anyway:  EMOTION_OPTIMIZE=false ./run_7emotions.sh ...
-#
-# Usage:
-#   ./run_7emotions.sh <input_image> <style_image> [output_dir]
-#
-# Example:
-#   ./run_7emotions.sh original-image/00028.jpg style-image/000_256_505_4k_mark-makovey-p-029_00.png my_check
 
 set -e
 
