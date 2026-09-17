@@ -92,8 +92,17 @@ we added the drive link.
 |---|---|---|
 | (https://drive.google.com/file/d/1Kpnl4nVNiUGVFOTcCdxNaY2lrPpOHC4n/view?usp=sharing) | (https://drive.google.com/file/d/1Yx_K71nXY8VRF642N-8IC0bgygOc0v7T/view?usp=sharing) | *(https://drive.google.com/drive/folders/1EwnajYMEsP9XPiZwAFAsbqTD-XaSihA-?usp=sharing)* |
 | (https://drive.google.com/file/d/1Kpnl4nVNiUGVFOTcCdxNaY2lrPpOHC4n/view?usp=sharing) | (https://drive.google.com/file/d/1cRr1b0BmxauUs59D9zKdrbpKMhxuV-B2/view?usp=sharing) | *(https://drive.google.com/drive/folders/1mEN7tfkaR6JzxK7sHA8uW3NqjOTimlmc?usp=sharing)* |
+| only emotion | (https://drive.google.com/file/d/1o0NKcnjT4NVN1A-RCg8ogVMQUDjQkxOD/view?usp=sharing) | *(https://drive.google.com/drive/folders/1BVG6nv57WACB1HEfG2ujx3iLHdOcsecI?usp=sharing)* |
 
+## On Robotic face
 
+we also have applied stylization on robotic or non-human face.
+
+| input | style image | video/image |
+|---|---|---|
+| (https://drive.google.com/file/d/1qeM2KurloASv1M2tnuvHJBYEF_BerTM7/view?usp=sharing) | (https://drive.google.com/file/d/1dexBm9-IKFZObjebAwNF8JPXmluTaZBN/view?usp=sharing) | *(https://drive.google.com/drive/folders/1uUG0IxLajsgXwXKdGS40Z4tKr66xE1sy?usp=sharing)* |
+| (https://drive.google.com/file/d/1VdyEK1HqXNHcsg84EFt14PuR5zWzDP9I/view?usp=sharing) | (https://drive.google.com/file/d/19z5iAsPujhULMSn850iHaEK0WB9ON_gM/view?usp=sharing) | *(https://drive.google.com/drive/folders/1ebvAjgWoW1i2WeDZhUDDS00HGIhpGg_V?usp=sharing)* |
+| https://drive.google.com/file/d/1HR0tRsaPK9bTQg7RiWbjrfdOkPFohA3B/view?usp=sharing | (https://drive.google.com/file/d/1-lmhvjujn_9mBJ9Vdl2kjhl_dMpBxIF6/view?usp=sharing) | *(https://drive.google.com/drive/folders/1ywqAVcHFJ6TV451QtCY1-jn68PfmdsW0?usp=sharing)* |
 
 
 ## Citation
