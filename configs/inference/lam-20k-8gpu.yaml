@@ -6,33 +6,15 @@ experiment:
     child: lam_20k
 
 model_name: ./model_zoo/lam_models/releases/lam/lam-20k/step_045500/
-# For stylization, point model_name at the trained checkpoint instead:
-#   exps/train_lam/style_appearance_e2e_v8/model_final.pt
-# (color-only appearance_mlp + geometry_mlp; the backbone is identical to the
-# release weights, so plain unstyled reconstruction is unaffected either way.)
-# v2/v4/v5/v6/v7 are known-bad -- see STYLE_GEOMETRY_PIPELINE.md.
+
 image_input: ./assets/sample_input/status.png
 export_video: true
 export_mesh: false
 motion_seqs_dir: ./assets/sample_motion/export/Look_In_My_Eyes/
-# style_autoencoder_path previously defaulted to the abandoned Stage 1/2
-# TinyStyleAutoEncoder checkpoint, which silently pre-blurred every style
-# reference image before use. That whole approach was disconnected from the
-# real style path (ReferenceStyleAdapter) and is no longer used -- see
-# STYLE_GEOMETRY_PIPELINE.md and the appearance_mlp fix in modeling_lam.py.
+
 style_autoencoder_path: null
 style_autoencoder_base_channels: 48
 style_autoencoder_latent_channels: 128
-
-# Recommended stylization strengths (validated on this session's test cases):
-# style_internal_appearance_strength: 0.75  # network color path
-# style_geometry_strength: 0.75             # network + algebraic shape blend
-# style_opacity_strength: 0.0
-# style_strength: 0.3-0.4                   # LAB post-process; still useful as
-#                                            # a contrast/mood refinement on top
-#                                            # of the network's color, not a
-#                                            # replacement for it anymore.
-# style_track_geometry: true
 
 model:
     # image encoder
