@@ -1,27 +1,4 @@
-#!/bin/bash
-# Stylised + emotion check: writes BOTH a still and a video for all 7 emotions.
-#
-# Outputs per emotion, for input photo <cid>.jpg:
-#   <out>/<emotion>/<cid>/stylized_preview.png   the still
-#   <out>/<emotion>_v/<cid>.mp4                  the video
-#   <out>/<emotion>_v/<cid>_audio.mp4            same video with the clip's audio
-#   <out>/<emotion>/<cid>/0000.png ... 0050.png  every frame, if FRAMES=true
-#
-# Usage:
-#   ./run_emotion_style_check.sh <input_image> <style_image> [out_dir]
-#
-#   FRAMES=true  ./run_emotion_style_check.sh ...   also dump all 51 frames
-#   STEPS=30     ./run_emotion_style_check.sh ...   faster/weaker emotion optimisation
-#   FULL=true    ./run_emotion_style_check.sh ...   real-time video (see below)
-#
-# Why the default video looks fast-forwarded: test_sample=true renders only 50
-# frames sampled evenly from the driving clip's 519, but the video is written
-# at render_fps=30, so 17.3s of motion plays back in 1.7s -- a 10.4x speedup,
-# with the full-length audio muxed on top of it. FULL=true renders every frame
-# instead, giving a real-time video (slower: it renders and encodes ~10x the
-# frames). The still is byte-identical either way -- both start at driving
-# frame 0 -- so this changes nothing about stylized_preview.png.
-#   EMOTIONS="happy sad" ./run_emotion_style_check.sh ...   only some classes
+
 set -e
 
 INPUT_IMAGE="${1:?usage: ./run_emotion_style_check.sh <input_image> <style_image> [out_dir]}"
