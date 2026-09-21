@@ -1,43 +1,5 @@
 training_mode: style_appearance_e2e
 
-# v8: trains on top of a real architecture fix, not just another loss/lr tweak.
-#
-# Found while investigating why v6/v7 barely moved (or moved wrong):
-# ReferenceStyleAdapter.forward() routed style_feats through style_cross_attn
-# (added for the Stage-4 cross-attention experiment, v3/v3_continue) before
-# appearance_mlp, UNCONDITIONALLY -- even for "v2", which predates that module
-# and has no style_cross_attn weights in its checkpoint. CrossAttnBlock has no
-# residual connection, so every load of v2 (training OR plain inference)
-# silently reinitialized style_cross_attn to random PyTorch-default weights,
-# feeding appearance_mlp a signal scrambled by an untrained attention layer --
-# non-deterministic across process restarts, and the real reason style
-# conditioning looked so weak/inconsistent. Fixed: style_cross_attn removed,
-# forward() now broadcasts the plain mean-pooled style_code to every point,
-# exactly what v2 was actually trained on (see modeling_lam.py).
-#
-# Re-measuring v2 with the bug fixed (deterministic now) revealed a second,
-# real issue: v2's learned response shifts color the WRONG way -- unstyled
-# mean RGB (195,189,180) should move toward the style image's (138,124,122)
-# but instead moves to (228,219,216), brighter instead of darker/warmer.
-# Matches the user's report exactly ("not even taking the colour texture").
-# Cause: style_style_loss_weight (Gram) is calibrated against a raw style
-# loss that stays ~0.0001-0.0008 across every prior run's logs -- easily
-# dominated by content/pixel/identity, so gradient descent found "get
-# brighter" (helps content/pixel loss on this light-background training set)
-# rather than real per-style color transfer. style_adain_loss_weight (direct
-# channel mean/std match) is structurally what a global affine color
-# transform can actually deliver, and now that appearance_mlp finally
-# receives a clean per-style signal (not cross-attn noise), it's worth a
-# real test: AdaIN made dominant, content/identity relaxed so "stay similar"
-# no longer fights the color change as hard.
-#
-# lr raised modestly (1e-4 -> 2e-4, not v7's reckless 10x) since a correct
-# direction matters more than raw magnitude here.
-#
-# Verification for this run is NOT just weight magnitude (that was
-# insufficient before) -- compare (styled_mean - unstyled_mean) against
-# (style_mean - unstyled_mean) and check the SIGN/direction agrees, not just
-# that something moved.
 
 model_name: exps/train_lam/style_appearance_e2e_v2/model_final.pt
 output_dir: exps/train_lam/style_appearance_e2e_v8
